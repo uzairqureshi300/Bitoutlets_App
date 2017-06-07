@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Bitoutlets_App</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="welcome">Welcome to Bit Outlets</string>
+    <string name="description">The Best E_commerce online shopping \n apps for people</string>
+    <string name="no_account">Don\'t have account</string>
+    <string name="already_login">Have account.Login Here</string>
 </resources>
