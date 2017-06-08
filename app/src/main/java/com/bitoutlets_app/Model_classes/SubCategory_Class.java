@@ -5,24 +5,24 @@ package com.bitoutlets_app.Model_classes;
  */
 
 public class SubCategory_Class {
-    private String sub_name;
-    private String sub_image;
+    private String name;
+    private String image;
     private String id;
 
-    public String getSub_name() {
-        return sub_name;
+    public String getName() {
+        return name;
     }
 
-    public void setSub_name(String sub_name) {
-        this.sub_name = sub_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSub_image() {
-        return sub_image;
+    public String getImage() {
+        return image;
     }
 
-    public void setSub_image(String sub_image) {
-        this.sub_image = sub_image;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getId() {

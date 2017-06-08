@@ -2,6 +2,7 @@ package com.bitoutlets_app.Recycler_Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +60,9 @@ public class Sub_Categories_recyclerView extends RecyclerView.Adapter<Sub_Catego
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.name.setText(horizontalList.get(position).getSub_name());
-        Picasso.with(context).load(horizontalList.get(position).getSub_image()).resize(250,250).centerCrop().placeholder(R.drawable.default_avatar).into(holder.cat_images);
+        holder.name.setText(horizontalList.get(position).getName());
+        Log.e("SIZE",horizontalList.get(position).getName());
+        Picasso.with(context).load("http://bitoutlets.com/uploads/sub_category_image/"+horizontalList.get(position).getImage()).resize(250,250).centerCrop().placeholder(R.drawable.default_avatar).into(holder.cat_images);
 
 
     }

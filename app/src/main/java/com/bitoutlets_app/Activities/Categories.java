@@ -24,6 +24,7 @@ import com.bitoutlets_app.Recycler_Adapters.Categories_recyclerView;
 import com.bitoutlets_app.Recycler_Adapters.RecyclerItemClickListener;
 import com.bitoutlets_app.Singletons.Category_Singletons;
 import com.bitoutlets_app.Volley_Singleton.MySingleton;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -96,36 +97,12 @@ public class Categories extends AppCompatActivity implements com.android.volley.
         Log.e("response", response.toString());
         try {
             mProgressDialog.dismiss();
+            Gson gson = new Gson();
             JSONArray array = response.optJSONArray("category");
             for (int i = 0; i < array.length(); i++) {
-
-                Category_class categories = new Category_class();
-                JSONObject jsonObject = array.getJSONObject(i);
-                categories.setName(jsonObject.getString("name"));
-                categories.setImage("http://bitoutlets.com/uploads/category_image/" + jsonObject.getString("image"));
-                categories.setId(jsonObject.getString("id"));
-
-                JSONArray array_sub = jsonObject.optJSONArray("sub");
-                if (array_sub != null) {
-                    for (int a = 0; a < array_sub.length(); a++) {
-
-                        SubCategory_Class subCategory_class = new SubCategory_Class();
-                        JSONObject jsonObject_sub = array_sub.getJSONObject(a);
-
-                        subCategory_class.setSub_name(jsonObject_sub.getString("name"));
-                        subCategory_class.setSub_image("http://bitoutlets.com/uploads/sub_category_image/" + jsonObject_sub.getString("image"));
-                        subCategory_class.setId(jsonObject_sub.getString("id"));
-                    }
-
-                }
-
-                categories.setSub_category(sub_category);
-
-                Log.e("size",sub_category.size()+"");
-
-                category.add(categories);
-
-                category_singletons.addPart(categories);
+              JSONObject jsonObject = array.getJSONObject(i);
+                Category_class category_class = gson.fromJson(jsonObject.toString(), Category_class.class);
+                category.add(category_class);
 
             }
             categories_recyclerView = new Categories_recyclerView(this, category);
@@ -139,16 +116,18 @@ public class Categories extends AppCompatActivity implements com.android.volley.
 
         }
     }
-    private void  list_click_listener(List<Category_class> categories_list){
+    private void  list_click_listener(final List<Category_class> categories_list){
 
         category_list.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int i) {
-
-                        Intent intent=new Intent(getApplicationContext(),Sub_Cat.class);
-                        intent.putExtra("value",i);
+                        Log.e("list",categories_list.get(i).getSub_category().size()+"");
+                        Category_class movieModel = categories_list.get(i); // getting the model
+                        Intent intent = new Intent(Categories.this, Sub_Cat.class);
+                        intent.putExtra("movieModel", new Gson().toJson(movieModel)); // converting model json into string type and sending it via intent
                         startActivity(intent);
+
                     }
                 })
         );

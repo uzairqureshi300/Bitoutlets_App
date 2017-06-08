@@ -1,5 +1,7 @@
 package com.bitoutlets_app.Model_classes;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ public class Category_class {
     private String name;
     private String image;
     private String id;
+    @SerializedName("sub")
     private List<SubCategory_Class> sub_category;
 
     public String getName() {
