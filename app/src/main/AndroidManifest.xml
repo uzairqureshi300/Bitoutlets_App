@@ -22,9 +22,7 @@
 
 <activity android:name=".Activities.Home"
     android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.Sub_Cat"
-            android:screenOrientation="portrait"/>
-<activity android:name=".Activities.Categories"/>
+        <activity android:name=".Activities.Categories"/>
 
 
 

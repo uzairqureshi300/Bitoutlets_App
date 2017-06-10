@@ -33,12 +33,18 @@ import pl.openrnd.multilevellistview.OnItemClickListener;
 
 
 public class Home extends AppCompatActivity {
+    DrawerLayout drawer;
 
     private MultiLevelListView multiLevelListView;
+    SharedPreferences sharedPreferences_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences_login=getSharedPreferences("Login",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences_login.edit();
+        editor.putInt("value",1);
+        editor.commit();
         setContentView(R.layout.home);
         SharedPreferences data=getSharedPreferences("User_details", Context.MODE_PRIVATE);
         Constants.token=data.getString("token","no");
@@ -48,7 +54,7 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -90,12 +96,22 @@ public class Home extends AppCompatActivity {
             builder.append(((BaseItem) object).getName());
             builder.append("\" clicked!\n");
             builder.append(getItemInfoDsc(itemInfo));
-
-                if(itemInfo.getLevel()==0){
-                    intent = new Intent(getApplication(), Categories.class);
-                    startActivity(intent);
-
+                switch (((BaseItem) object).getName()) {
+                    case "Categories":
+                        drawer.closeDrawers();
+                        Constants.fragment_value=0;
+                        Constants.back_value=0;
+                        intent = new Intent(getApplication(), Categories.class);
+                        startActivity(intent);
+                        break;
+                    case "Profile Info":
+                        Toast.makeText(Home.this, "cwwd", Toast.LENGTH_SHORT).show();
+                        break;
                 }
+
+
+
+
         }
 
         @Override

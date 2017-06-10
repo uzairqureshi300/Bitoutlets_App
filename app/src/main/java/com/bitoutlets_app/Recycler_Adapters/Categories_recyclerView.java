@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 
 /**
@@ -60,7 +61,11 @@ public class Categories_recyclerView extends RecyclerView.Adapter<Categories_rec
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(horizontalList.get(position).getName());
-        Picasso.with(context).load("http://bitoutlets.com/uploads/category_image/"+horizontalList.get(position).getImage()).resize(250,250).centerCrop().placeholder(R.drawable.default_avatar).into(holder.cat_images);
+        Picasso.with(context).load("http://bitoutlets.com/uploads/category_image/"+horizontalList.get(position).getImage())
+                .resize(250,250).centerCrop().
+        transform(new RoundedCornersTransformation(15, 0,
+                RoundedCornersTransformation.CornerType.ALL))
+                .placeholder(R.drawable.default_avatar).into(holder.cat_images);
 
 
     }

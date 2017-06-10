@@ -2,7 +2,6 @@ package com.bitoutlets_app.Recycler_Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bitoutlets_app.Model_classes.Category_class;
-import com.bitoutlets_app.Model_classes.SubCategory_Class;
+import com.bitoutlets_app.Model_classes.Product_class;
 import com.bitoutlets_app.R;
 import com.squareup.picasso.Picasso;
 
@@ -24,12 +23,15 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
  * Created by uzair on 09/05/2017.
  */
 
-public class Sub_Categories_recyclerView extends RecyclerView.Adapter<Sub_Categories_recyclerView.MyViewHolder> {
+public class Product_recyclerView extends RecyclerView.Adapter<Product_recyclerView.MyViewHolder> implements View.OnClickListener {
 
-    private List<SubCategory_Class> horizontalList=new ArrayList<SubCategory_Class>();
+    private List<Product_class> horizontalList=new ArrayList<Product_class>();
     private Context context;
 
+    @Override
+    public void onClick(View view) {
 
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
     private ImageView cat_images;
@@ -43,7 +45,7 @@ public class Sub_Categories_recyclerView extends RecyclerView.Adapter<Sub_Catego
     }
 
 
-    public Sub_Categories_recyclerView(Context context, List<SubCategory_Class> horizontalList) {
+    public Product_recyclerView(Context context, List<Product_class> horizontalList) {
         this.context=context;
         this.horizontalList = horizontalList;
     }
@@ -57,20 +59,20 @@ public class Sub_Categories_recyclerView extends RecyclerView.Adapter<Sub_Catego
         return holder;
     }
 
-     @Override
+    @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.name.setText(horizontalList.get(position).getName());
-        Log.e("SIZE",horizontalList.get(position).getName());
-        Picasso.with(context).load("http://bitoutlets.com/uploads/sub_category_image/"+horizontalList.get(position).getImage())
+        holder.name.setText(horizontalList.get(position).getTitle());
+        Picasso.with(context).load(horizontalList.get(position).getImage())
                 .resize(250,250).centerCrop().
-                transform(new RoundedCornersTransformation(15, 0,
-                        RoundedCornersTransformation.CornerType.ALL)).
-                placeholder(R.drawable.default_avatar).into(holder.cat_images);
+        transform(new RoundedCornersTransformation(15, 0,
+                RoundedCornersTransformation.CornerType.ALL))
+                .placeholder(R.drawable.default_avatar).into(holder.cat_images);
+
+
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return horizontalList.size();
     }
 }

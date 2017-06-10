@@ -26,7 +26,7 @@ public class CustomDataProvider {
         * GROUPITEM = DENGAN CHILD
         * */
         rootMenu.add(new Item("Categories"));
-        rootMenu.add(new Item("KERANJANG"));
+        rootMenu.add(new GroupItem("Profile"));
         rootMenu.add(new GroupItem("KATEGORI"));
         rootMenu.add(new GroupItem("KATEGORI LAINNYA"));
         rootMenu.add(new Item("PENGATURAN"));
@@ -54,8 +54,8 @@ public class CustomDataProvider {
         * */
         switch (level){
             case LEVEL_1 :
-                switch (menuItem.toUpperCase()){
-                    case "KATEGORI" :
+                switch (menuItem){
+                    case "Profile" :
                         result = getListKategori();
                         break;
                     case "KATEGORI LAINNYA" :
@@ -91,8 +91,17 @@ public class CustomDataProvider {
         GroupItem groupItem = new GroupItem("GROUP 1");
         groupItem.setLevel(groupItem.getLevel() + 1);
 
-        list.add(new Item("ITEM 1"));
-        list.add(new Item("ITEM 2"));
+
+        list.add(new Item("Profile Info"));
+        list.add(new Item("Support Ticket"));
+        list.add(new Item("Whishlist"));
+        list.add(new Item("Order History"));
+        list.add(new Item("Edit Profile"));
+        list.add(new Item("Support Ticket"));
+        list.add(new Item("Downloads"));
+        list.add(new Item("Wallet"));
+        list.add(groupItem);
+
         list.add(groupItem);
 
         return list;
