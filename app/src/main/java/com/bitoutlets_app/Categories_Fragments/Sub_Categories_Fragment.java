@@ -77,6 +77,7 @@ public class Sub_Categories_Fragment extends Fragment
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int i) {
+                        Constants.product_fragment_value=0;
                         Constants.sub_cat_id= movieModel.getSub_category().get(i).getId();
                         ((Categories)getActivity()).Integrate_fragments(3);
                    }

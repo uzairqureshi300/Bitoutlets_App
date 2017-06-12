@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bitoutlets_app.Categories_Fragments.Category_Fragment;
 import com.bitoutlets_app.Categories_Fragments.Product_Fragment;
+import com.bitoutlets_app.Categories_Fragments.Product_detail_Fragment;
 import com.bitoutlets_app.Categories_Fragments.Sub_Categories_Fragment;
 import com.bitoutlets_app.Constants;
 import com.bitoutlets_app.Model_classes.Category_class;
@@ -75,7 +76,7 @@ public class Categories extends AppCompatActivity implements com.android.volley.
 
             fragment = new Category_Fragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            ft.setCustomAnimations(R.anim.slide_in_right,0);
             ft.replace(R.id.content_frame, fragment);
             ft.addToBackStack(null);
             ft.commit();
@@ -85,7 +86,7 @@ public class Categories extends AppCompatActivity implements com.android.volley.
 
             fragment = new Sub_Categories_Fragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            ft.setCustomAnimations(R.anim.slide_in_right,0);
             ft.replace(R.id.content_frame, fragment);
             ft.addToBackStack(null);
             ft.commit();
@@ -95,7 +96,17 @@ public class Categories extends AppCompatActivity implements com.android.volley.
 
             fragment = new Product_Fragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            ft.setCustomAnimations(R.anim.slide_in_right,0);
+            ft.replace(R.id.content_frame, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+        if (number == 4) {
+            toolbar_title.setText("Products Details");
+
+            fragment = new Product_detail_Fragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(R.anim.slide_in_right,0);
             ft.replace(R.id.content_frame, fragment);
             ft.addToBackStack(null);
             ft.commit();
@@ -104,7 +115,17 @@ public class Categories extends AppCompatActivity implements com.android.volley.
 
     @Override
     public void onBackPressed() {
-
+        if (  transition_value == 4) {
+            Log.e("error", getSupportFragmentManager().getBackStackEntryCount() + "");
+            toolbar_title.setText("Product");
+            Constants.product_fragment_value=1;
+            fragment = new Product_Fragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            ft.replace(R.id.content_frame, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
             if (  transition_value == 3) {
                 Constants.fragment_value = 1;
                 Log.e("error", getSupportFragmentManager().getBackStackEntryCount() + "");
@@ -145,8 +166,30 @@ public class Categories extends AppCompatActivity implements com.android.volley.
                 if (Constants.back_value == 1) {
                     finish();
                 } else {
-                    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    if (  transition_value == 4) {
+                        Log.e("error", getSupportFragmentManager().getBackStackEntryCount() + "");
+                        toolbar_title.setText("Product");
+                        Constants.product_fragment_value=1;
+                        fragment = new Product_Fragment();
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        ft.replace(R.id.content_frame, fragment);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                    }
+                    if (  transition_value == 3) {
                         Constants.fragment_value = 1;
+                        Log.e("error", getSupportFragmentManager().getBackStackEntryCount() + "");
+                        toolbar_title.setText("Sub_Categories");
+
+                        fragment = new Sub_Categories_Fragment();
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        ft.replace(R.id.content_frame, fragment);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                    }
+                    if(transition_value==2){
                         Log.e("error", getSupportFragmentManager().getBackStackEntryCount() + "");
                         toolbar_title.setText("Categories");
 
@@ -156,6 +199,12 @@ public class Categories extends AppCompatActivity implements com.android.volley.
                         ft.replace(R.id.content_frame, fragment);
                         ft.addToBackStack(null);
                         ft.commit();
+
+                    }
+                    if(transition_value==1){
+                        Log.e("error", getSupportFragmentManager().getBackStackEntryCount() + "");
+                        finish();
+
                     }
                 }
                 return true;

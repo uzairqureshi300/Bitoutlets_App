@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -104,6 +105,8 @@ public class Login_Fragment extends Fragment  implements View.OnClickListener,co
     @Override
     public void onErrorResponse(VolleyError error) {
         mProgressDialog.dismiss();
+        Log.e("error_response",error.toString());
+
     }
 
     @Override
