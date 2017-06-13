@@ -23,15 +23,30 @@
         android:layout_weight="0.3"
         android:id="@+id/product_image"
         android:src="@drawable/default_avatar"/>
-   <TextView
+   <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_weight="0.8"
-       android:text="Price"
-       android:textColor="@color/black"
-       android:id="@+id/product_price"
-       android:textSize="18dp"
-       />
+       android:orientation="horizontal"
+       android:layout_weight="0.8">
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1.1"
+           android:text="Price"
+           android:textColor="@color/black"
+           android:textSize="18dp"
+           />
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="0.8"
+           android:text="Price"
+           android:textColor="@color/black"
+           android:id="@+id/product_price"
+           android:textSize="18dp"
+           />
+   </LinearLayout>
+
 </LinearLayout>
  <LinearLayout
      android:layout_width="match_parent"
@@ -59,15 +74,22 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_weight="1.6"/>
-    <TextView
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="titletitletitletitletitletitletitletitletitletitletitletitletitletitletitle"
-        android:textSize="17dp"
-        android:textColor="@color/black"
-        android:id="@+id/description"
-        android:layout_weight="0.8"
-        />
+        android:layout_weight="0.8">
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:text="titletitletitletitletitletitletitletitletitletitletitletitletitletitletitle"
+            android:textColor="@color/black"
+            android:textSize="17dp" />
+    </ScrollView>
+
 </LinearLayout>
  <LinearLayout
      android:layout_width="match_parent"
@@ -76,94 +98,117 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginLeft="10dp"
-    android:layout_weight="1.05">
+    android:layout_weight="0.9">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    >
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:textColor="@color/black"
+      android:text="Discount"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Available Size"
-        android:textSize="21dp"
         android:textColor="@color/black"
-        android:layout_weight="1.9"
-        />
-  <LinearLayout
+        android:text="not available"
+        android:id="@+id/discount"
+        android:layout_weight="1"/>
+</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:text="Stock"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:text="not available"
+                android:id="@+id/stock"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:text=""
+                android:id="@+id/quantity"
+                android:textColorHint="@color/black"
+                android:textSize="15dp"
+                android:hint="enter quantity"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+
+                android:gravity="center"
+
+                android:layout_weight="1"/>
+        </LinearLayout>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1"
+           android:text="tags"
+           android:textColor="@color/black"
+           android:id="@+id/tags"/>
+
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="2">
+
+  <ImageView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_weight="1.4"
-      android:orientation="horizontal">
-     <TextView
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:layout_weight="1"/>
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:text="20"
-          android:gravity="center"
-          android:background="@drawable/text_bg"
-          android:textSize="14dp"
-          android:layout_weight="0.9"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"/>
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:text="20"
-          android:gravity="center"
-          android:background="@drawable/text_bg"
-          android:textSize="14dp"
-          android:layout_weight="0.9"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"/>
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:text="20"
-          android:gravity="center"
-          android:background="@drawable/text_bg"
-          android:textSize="14dp"
-          android:layout_weight="0.9"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"/>
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:text="20"
-          android:gravity="center"
-          android:background="@drawable/text_bg"
-          android:textSize="14dp"
-          android:layout_weight="0.9"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"/>
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:text="20"
-          android:gravity="center"
-          android:background="@drawable/text_bg"
-          android:textSize="14dp"
-          android:layout_weight="0.9"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"/>
-  </LinearLayout>
+      android:src="@drawable/wishlist"
+      android:id="@+id/whislist"
+      android:layout_weight="1"/>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:textColor="@color/black"
+        android:text="Add to Whishlist"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/compare"
+        android:id="@+id/compare"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:text="Compare"/>
+</LinearLayout>
 
 </LinearLayout>
 <LinearLayout

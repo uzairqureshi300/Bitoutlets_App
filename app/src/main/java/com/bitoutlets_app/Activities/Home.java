@@ -1,9 +1,11 @@
 package com.bitoutlets_app.Activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -41,6 +43,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         sharedPreferences_login=getSharedPreferences("Login",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences_login.edit();
         editor.putInt("value",1);
@@ -48,6 +51,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.home);
         SharedPreferences data=getSharedPreferences("User_details", Context.MODE_PRIVATE);
         Constants.token=data.getString("token","no");
+
         Constants.user_id=data.getString("user_id","no");
         Log.e("DDDDD",Constants.token+"   "  +Constants.user_id);
 

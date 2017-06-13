@@ -110,8 +110,7 @@ public class Product_Fragment extends Fragment implements com.android.volley.Res
             ex.printStackTrace();
 
         }
-
-    }
+  }
     @Override
     public void onErrorResponse(VolleyError error) {
 
@@ -182,23 +181,13 @@ public class Product_Fragment extends Fragment implements com.android.volley.Res
                         Constants.product_discount= list.get(i).getDescription();
                         Constants.product_tax= list.get(i).getTax();
                         Constants.product_description= list.get(i).getDescription();
-
-
-
-
-
                         ((Categories)getActivity()).Integrate_fragments(4);
-
-
-                    }
+                     }
                 })
+
         );
 
 
     }
-
-
-
-
 
 }
