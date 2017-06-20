@@ -23,7 +23,21 @@ public class Constants {
     public static String product_unit="";
     public static String product_current_stock="";
     public static String product_discount="";
-    public static String product_tax="";
     public static String product_description="";
+    public static String product_tax="";
+    public static String profile_name="";
+    public static String profile_email="";
+    public static String profile_address1="";
+    public static String profile_address2="";
+    public static String profile_phone="";
+    public static String profile_city="";
+    public static String profile_state="";
+    public static String profile_country="";
+    public static String profile_image="";
+    public static String profile_totla_purchase="";
+    public static int profile_value=0;
+
+
+
 
 }

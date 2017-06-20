@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,10 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bitoutlets_app.Categories_Fragments.Product_Fragment;
 import com.bitoutlets_app.Constants;
 import com.bitoutlets_app.Menu_Drawer.data.BaseItem;
 import com.bitoutlets_app.Menu_Drawer.data.CustomDataProvider;
 import com.bitoutlets_app.Menu_Drawer.views.LevelBeamView;
+import com.bitoutlets_app.Profile_fragments.Edit_Profile_Fragment;
+import com.bitoutlets_app.Profile_fragments.Profile_Fragment;
+import com.bitoutlets_app.Profile_fragments.Support_Fragment;
 import com.bitoutlets_app.R;
 
 import java.util.List;
@@ -36,7 +42,7 @@ import pl.openrnd.multilevellistview.OnItemClickListener;
 
 public class Home extends AppCompatActivity {
     DrawerLayout drawer;
-
+private Fragment fragment=null;
     private MultiLevelListView multiLevelListView;
     SharedPreferences sharedPreferences_login;
 
@@ -107,9 +113,34 @@ public class Home extends AppCompatActivity {
                         Constants.back_value=0;
                         intent = new Intent(getApplication(), Categories.class);
                         startActivity(intent);
+                        drawer.closeDrawers();
                         break;
                     case "Profile Info":
-                        Toast.makeText(Home.this, "cwwd", Toast.LENGTH_SHORT).show();
+                        fragment = new Profile_Fragment();
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        ft.replace(R.id.home_fragment, fragment);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                        drawer.closeDrawers();
+                        break;
+                    case "Edit Profile":
+                        fragment = new Edit_Profile_Fragment();
+                        ft = getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        ft.replace(R.id.home_fragment, fragment);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                        drawer.closeDrawers();
+                        break;
+                    case "Support Ticket":
+                        fragment = new Support_Fragment();
+                        ft = getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        ft.replace(R.id.home_fragment, fragment);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                        drawer.closeDrawers();
                         break;
                 }
 

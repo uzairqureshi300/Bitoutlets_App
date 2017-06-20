@@ -63,8 +63,8 @@ public class Login_Fragment extends Fragment  implements View.OnClickListener,co
         showProgressDialog();
         try {
             JSONObject json = new JSONObject();
-            json.put("email", "aftab.sharif@hotmail.com");
-            json.put("password", "e9bafdb0fec4");
+            json.put("email", enter_email.getText().toString());
+            json.put("password", enter_password.getText().toString());
 
             JSONObject json2 = new JSONObject();
             json2.put("to", "bitoutlet");

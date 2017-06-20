@@ -44,7 +44,7 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
     private TextView description,price,title,tags,discount,stock;
     private EditText quantity;
     private SharedPreferences sharedPreferences;
-    private ImageView image,add_cart,whish_list;
+    private ImageView image,add_cart,whish_list,compare;
     private int database_value=0;
     @Nullable
     @Override
@@ -64,11 +64,14 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
         tags=(TextView)v.findViewById(R.id.tags);
         quantity=(EditText)v.findViewById(R.id.quantity);
         whish_list=(ImageView)v.findViewById(R.id.whislist);
+        compare=(ImageView)v.findViewById(R.id.compare);
+
         add_cart.setOnClickListener(this);
         whish_list.setOnClickListener(this);
+        compare.setOnClickListener(this);
         Product_details();
         Picasso.with(getActivity()).load(Constants.product_images)
-                .resize(250,250).centerCrop().
+                .
                 transform(new RoundedCornersTransformation(15, 0,
                         RoundedCornersTransformation.CornerType.ALL))
                 .placeholder(R.drawable.default_avatar).into(image);
@@ -97,7 +100,10 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
                 database_value=2;
                 insert_data();
                 break;
-
+            case R.id.compare:
+                database_value=3;
+                insert_data();
+                break;
         }
 
 
@@ -139,6 +145,11 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
             affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_Whish, null, contentValues);
             whish_list.setEnabled(false);
         }
+        else if(database_value==3){
+
+            affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_Compare, null, contentValues);
+            compare.setEnabled(false);
+        }
         // It is a good practice to close the database connections after you have done with it
         sqliteDatabase.close();
 
@@ -149,6 +160,8 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
     private void get_Id(String id) {
         List<String> list_id=new ArrayList<String>();
         List<String> list_whish=new ArrayList<String>();
+        List<String> list_compare=new ArrayList<String>();
+
         AndroidOpenDbHelper openHelperClass = new AndroidOpenDbHelper(getActivity());
 
         SQLiteDatabase sqliteDatabase = openHelperClass.getReadableDatabase();
@@ -176,6 +189,19 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
             if(id.equals(list_whish.get(i))){
 
                 whish_list.setEnabled(false);
+            }
+        }
+        cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_Compare, null, null, null, null, null, null);
+        getActivity().startManagingCursor(cursor);
+        while (cursor.moveToNext()) {
+            Log.e("count", cursor.toString());
+            String First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id));
+            list_compare.add(First_name);
+        }
+        for(int i=0;i<list_compare.size();i++){
+            if(id.equals(list_compare.get(i))){
+
+                compare.setEnabled(false);
             }
         }
     }

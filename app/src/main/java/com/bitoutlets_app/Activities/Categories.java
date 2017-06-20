@@ -76,7 +76,6 @@ public class Categories extends AppCompatActivity implements com.android.volley.
 
             fragment = new Category_Fragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.anim.slide_in_right,0);
             ft.replace(R.id.content_frame, fragment);
             ft.addToBackStack(null);
             ft.commit();

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#1dba9b</color>
     <color name="colorPrimaryDark">#1dda9b</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FFF</color>
     <color name="white">#fff</color>
     <color name="level_0">#1abc9c</color>
     <color name="level_1">#3498db</color>
@@ -10,7 +10,9 @@
     <color name="level_3">#8e44ad</color>
     <color name="level_4">#f1c40f</color>
     <color name="level_5">#2ecc71</color>
+    <color name="grey">#a1a1a1</color>
     <color name="level_default">#000000</color>
     <color name="black">#000000</color>
     <color name="font_item_drawer">#000000</color>
+    <color name="tab_view_color">#21836c</color>
 </resources>

@@ -14,6 +14,7 @@ public class AndroidOpenDbHelper extends SQLiteOpenHelper {
 	// Table attributes
 	public static final String TABLE_NAME_Cart = "Cart_Table";
 	public static final String TABLE_NAME_Whish = "Whish_Table";
+	public static final String TABLE_NAME_Compare = "Comapre_Table";
 	public static final String product_id = "product_id";
 	public static final String product_title = "product_title";
 	public static final String product_price = "product_price";
@@ -71,6 +72,22 @@ public class AndroidOpenDbHelper extends SQLiteOpenHelper {
 				+ product_unit + " real);";
 		// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
 		db.execSQL(sqlQueryToCreateUndergraduateDetailsTable_whishlist);
+		String sqlQueryToCreateUndergraduateDetailsTable_compare = "create table if not exists " + TABLE_NAME_Compare + " ( " + BaseColumns._ID + " integer primary key autoincrement, "
+				+ product_id + " text, "
+				+ product_title + " text, " +
+				product_price + " text, " +
+				product_shipping + " text, " +
+				product_features + " text, " +
+				product_tags + " text, "
+				+ product_current_stock + " text, "
+				+ product_no_of_views + " text, "
+				+ product_discount + " text, " +
+				product_tax + " text, "
+				+ product_description + " text, "
+				+ product_image + " text, "
+				+ product_unit + " real);";
+		// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
+		db.execSQL(sqlQueryToCreateUndergraduateDetailsTable_compare );
 
 
 	}
@@ -116,6 +133,22 @@ public class AndroidOpenDbHelper extends SQLiteOpenHelper {
 					+ product_unit + " real);";
 			// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
 			db.execSQL(sqlQueryToCreateUndergraduateDetailsTable_whishlist);
+			String sqlQueryToCreateUndergraduateDetailsTable_compare = "create table if not exists " + TABLE_NAME_Compare + " ( " + BaseColumns._ID + " integer primary key autoincrement, "
+					+ product_id + " text, "
+					+ product_title + " text, " +
+					product_price + " text, " +
+					product_shipping + " text, " +
+					product_features + " text, " +
+					product_tags + " text, "
+					+ product_current_stock + " text, "
+					+ product_no_of_views + " text, "
+					+ product_discount + " text, " +
+					product_tax + " text, "
+					+ product_description + " text, "
+					+ product_image + " text, "
+					+ product_unit + " real);";
+			// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
+			db.execSQL(sqlQueryToCreateUndergraduateDetailsTable_compare );
 
 
 		}
