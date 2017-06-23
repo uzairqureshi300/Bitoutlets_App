@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +31,16 @@ import com.bitoutlets_app.Menu_Drawer.data.BaseItem;
 import com.bitoutlets_app.Menu_Drawer.data.CustomDataProvider;
 import com.bitoutlets_app.Menu_Drawer.views.LevelBeamView;
 import com.bitoutlets_app.Profile_fragments.Edit_Profile_Fragment;
+import com.bitoutlets_app.Profile_fragments.Featured_Fragment;
 import com.bitoutlets_app.Profile_fragments.Profile_Fragment;
 import com.bitoutlets_app.Profile_fragments.Support_Fragment;
 import com.bitoutlets_app.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import pl.openrnd.multilevellistview.ItemInfo;
 import pl.openrnd.multilevellistview.MultiLevelListAdapter;
 import pl.openrnd.multilevellistview.MultiLevelListView;
@@ -43,9 +50,11 @@ import pl.openrnd.multilevellistview.OnItemClickListener;
 public class Home extends AppCompatActivity {
     DrawerLayout drawer;
 private Fragment fragment=null;
+    private TextView username,email;
     private MultiLevelListView multiLevelListView;
     SharedPreferences sharedPreferences_login;
-
+    private CircleImageView profile_picture;
+    View head;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,25 +66,43 @@ private Fragment fragment=null;
         setContentView(R.layout.home);
         SharedPreferences data=getSharedPreferences("User_details", Context.MODE_PRIVATE);
         Constants.token=data.getString("token","no");
-
         Constants.user_id=data.getString("user_id","no");
-        Log.e("DDDDD",Constants.token+"   "  +Constants.user_id);
+        Constants.image=data.getString("image","no");
+        Constants.username=data.getString("username","no");
+        Constants.email=data.getString("email","no");
+       Log.e("DDDDD",Constants.image);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        multiLevelListView = (MultiLevelListView) findViewById(R.id.multiLevelMenu);
+        username=(TextView)findViewById(R.id.username);
+        email=(TextView)findViewById(R.id.email);
+        username.setText(Constants.username);
+        email.setText(Constants.email);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+//        NavigationView layout = (NavigationView) findViewById(R.id.nav_view);
+//        View.inflate(this, R.layout.nav_header_main, layout);
+//
+        profile_picture = (CircleImageView)findViewById(R.id.imageView);
+        Picasso.with(getApplication()).load(Constants.image)
+                .placeholder(R.drawable.default_avatar).into(profile_picture);
 
+        fragment = new Featured_Fragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ft.replace(R.id.home_fragment, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
         confMenu();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -88,8 +115,6 @@ private Fragment fragment=null;
 
 
     private void confMenu() {
-        multiLevelListView = (MultiLevelListView) findViewById(R.id.multiLevelMenu);
-
         // custom ListAdapter
         ListAdapter listAdapter = new ListAdapter();
 
@@ -201,7 +226,7 @@ private Fragment fragment=null;
             if (itemInfo.isExpandable()) {
                 viewHolder.arrowView.setVisibility(View.VISIBLE);
                 viewHolder.arrowView.setImageResource(itemInfo.isExpanded() ?
-                        R.drawable.ic_expand_less : R.drawable.ic_expand_more);
+                        R.drawable.arrow_up : R.drawable.arrow_down);
             } else {
                 viewHolder.arrowView.setVisibility(View.GONE);
             }

@@ -116,15 +116,20 @@ public class Login_Fragment extends Fragment  implements View.OnClickListener,co
 
 
         mProgressDialog.dismiss();
+            if(response.getString("error").equals("0")) {
+                SharedPreferences data = getActivity().getSharedPreferences("User_details", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = data.edit();
+                edit.putString("token", response.getString("token"));
+                edit.putString("user_id", response.getString("user_id"));
+                edit.putString("image", response.getString("image"));
+                edit.putString("username", response.getString("username"));
+                edit.putString("email", response.getString("email"));
 
-            SharedPreferences data= getActivity().getSharedPreferences("User_details", Context.MODE_PRIVATE);
-            SharedPreferences.Editor edit = data.edit();
-        edit.putString("token",response.getString("token"));
-        edit.putString("user_id",response.getString("user_id"));
-        edit.commit();
-            Intent i=new Intent(getActivity(), Home.class);
-            startActivity(i);
-            getActivity().finish();
+                edit.commit();
+                Intent i = new Intent(getActivity(), Home.class);
+                startActivity(i);
+                getActivity().finish();
+            }
         }catch(Exception ex){
             Log.e("exception",ex.toString());
             ex.printStackTrace();

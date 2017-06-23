@@ -76,13 +76,13 @@ public class LevelBeamView extends View {
 
     private int getColorResIdForLevel(int level){
         switch(level){
-            case 0: return R.color.level_0;
-            case 1: return R.color.level_1;
-            case 2: return R.color.level_2;
-            case 3: return R.color.level_3;
-            case 4: return R.color.level_4;
-            case 5: return R.color.level_5;
-            default: return R.color.level_default;
+            case 0: return R.color.colorPrimary;
+            case 1: return R.color.colorPrimary;
+            case 2: return R.color.colorPrimary;
+            case 3: return R.color.colorPrimary;
+            case 4: return R.color.colorPrimary;
+            case 5: return R.color.colorPrimary;
+            default: return R.color.colorPrimary;
         }
     }
 }

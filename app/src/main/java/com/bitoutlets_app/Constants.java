@@ -7,6 +7,9 @@ package com.bitoutlets_app;
 public class Constants {
     public static String user_id="";
     public static String token="";
+    public static String email="";
+    public static String image="";
+    public static String username="";
     public static int fragment_value=0;
     public static int back_value=0;
     public static int product_fragment_value=0;

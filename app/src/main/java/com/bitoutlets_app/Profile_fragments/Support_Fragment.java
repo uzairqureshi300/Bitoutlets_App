@@ -32,7 +32,7 @@ public class Support_Fragment extends Fragment
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new Support_CreateTicket_Fragment(), "Create Ticket");
-        adapter.addFragment(new Edit_Profile_ChangePassword_Fragment(), "Change Password");
+        adapter.addFragment(new Support_ViewTickets_Fragment(), "All Mesages");
 
         viewPager.setAdapter(adapter);
 

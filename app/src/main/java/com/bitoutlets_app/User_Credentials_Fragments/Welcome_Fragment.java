@@ -38,89 +38,8 @@ public class Welcome_Fragment extends Fragment  implements View.OnClickListener,
         View v =  inflater.inflate(R.layout.welcome_fragment, container, false);
         login_btn=(ImageView)v.findViewById(R.id.btn_login);
         login_btn.setOnClickListener(this);
-     //   Edit_Pro();
-      //  Pro();
-       // Ticket();
-    //   get_Ticket();
-   //     get_featured();
-        get_Ticket_msg();
         return v;
     }
-    private void get_Ticket_msg() {
-        try {
-            JSONObject json = new JSONObject();
-            json.put("token", "92770789423");
-            json.put("user_id", "15");
-            json.put("ticket_id","17");
-
-            JSONObject json2 = new JSONObject();
-            json2.put("to", "bitoutlet");
-            json2.put("methods", "get_message_detail");
-            json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
-
-            };
-            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    5000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            MySingleton.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-
-        }
-    }
-    private void Ticket() {
-        try {
-            JSONObject json = new JSONObject();
-            json.put("token", "92770789423");
-            json.put("user_id", "15");
-            json.put("subject","dhjbshvdcscds");
-            json.put("reply","dsadas");
-            JSONObject json2 = new JSONObject();
-            json2.put("to", "bitoutlet");
-            json2.put("methods", "ticket_generate");
-            json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
-
-            };
-            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    5000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            MySingleton.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-
-        }
-    }
-    private void get_Ticket() {
-        try {
-            JSONObject json = new JSONObject();
-            json.put("token", "92770789423");
-            json.put("user_id", "15");
-
-            JSONObject json2 = new JSONObject();
-            json2.put("to", "bitoutlet");
-            json2.put("methods", "get_tickets");
-            json2.accumulate("complex", json);
-            String url = "http://orupartners.com/cp/redirect_to.php";
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
-
-            };
-            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    5000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            MySingleton.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-
-        }
-    }
-
 
 
 

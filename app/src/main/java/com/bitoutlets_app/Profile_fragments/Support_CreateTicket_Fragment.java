@@ -1,7 +1,9 @@
 package com.bitoutlets_app.Profile_fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 public class Support_CreateTicket_Fragment extends Fragment implements View.OnClickListener,com.android.volley.Response.Listener<JSONObject>, com.android.volley.Response.ErrorListener
 
 {
+    private ProgressDialog mProgressDialog;
     private EditText subject,message;
     private ImageView generate;
     private View snacke_view;
@@ -42,8 +45,15 @@ public class Support_CreateTicket_Fragment extends Fragment implements View.OnCl
         generate.setOnClickListener(this);
     return v;
     }
+    private void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(getActivity(), R.style.AppCompatAlertDialogStyle);
+        mProgressDialog.setMessage("Please Wait..");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
     private void Ticket() {
         try {
+            showProgressDialog();
             JSONObject json = new JSONObject();
             json.put("token", Constants.token);
             json.put("user_id", Constants.user_id);
@@ -83,12 +93,24 @@ public class Support_CreateTicket_Fragment extends Fragment implements View.OnCl
 
     @Override
     public void onErrorResponse(VolleyError error) {
+        mProgressDialog.dismiss();
+       Snackbar.make(snacke_view,"no internet connection",Snackbar.LENGTH_SHORT).show();
+
+
 
     }
 
     @Override
     public void onResponse(JSONObject response) {
+        mProgressDialog.dismiss();
         Log.e("response",response.toString());
+        try {
+            if (response.getString("error").equals("0")) {
+                Snackbar.make(snacke_view,"Request Send",Snackbar.LENGTH_SHORT).show();
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
 }
