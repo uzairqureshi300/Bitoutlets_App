@@ -61,11 +61,12 @@ public class Sub_Categories_recyclerView extends RecyclerView.Adapter<Sub_Catego
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(horizontalList.get(position).getName());
         Log.e("SIZE",horizontalList.get(position).getName());
-        Picasso.with(context).load("http://bitoutlets.com/uploads/sub_category_image/"+horizontalList.get(position).getImage())
-                .resize(250,250).centerCrop().
-                transform(new RoundedCornersTransformation(15, 0,
-                        RoundedCornersTransformation.CornerType.ALL)).
-                placeholder(R.drawable.default_avatar).into(holder.cat_images);
+         Picasso.with(context).load("http://bitoutlets.com/uploads/sub_category_image/"+horizontalList.get(position).getImage())
+                 .fit().centerCrop() .transform(new RoundedCornersTransformation(15, 0,
+                 RoundedCornersTransformation.CornerType.ALL))
+                 .placeholder(R.drawable.default_avatar).into(holder.cat_images);
+
+
     }
 
     @Override

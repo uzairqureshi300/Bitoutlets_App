@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.bitoutlets_app.Model_classes.SubCategory_Class;
 import com.bitoutlets_app.R;
 import com.bitoutlets_app.Recycler_Adapters.Categories_recyclerView;
 import com.bitoutlets_app.Recycler_Adapters.RecyclerItemClickListener;
+import com.bitoutlets_app.Recycler_Adapters.SimpleDividerItemDecoration;
 import com.bitoutlets_app.Singletons.Category_Singletons;
 import com.bitoutlets_app.Volley_Singleton.MySingleton;
 import com.google.gson.Gson;
@@ -68,12 +70,15 @@ public class Category_Fragment extends Fragment  implements com.android.volley.R
             category=category_singletons.getCategory_list();
             progressBar.setVisibility(View.GONE);
             category_list.setVisibility(View.VISIBLE);
-            categories_recyclerView = new Categories_recyclerView(getActivity(), category);
-            RecyclerView.LayoutManager		mLayoutManager = new GridLayoutManager(getActivity(),3);
+             categories_recyclerView = new Categories_recyclerView(getActivity(), category);
+            category_list.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+
+            RecyclerView.LayoutManager		mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+            category_list.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
             category_list.setLayoutManager(mLayoutManager);
             category_list.setAdapter(categories_recyclerView);
             list_click_listener(category);
-        }
+         }
         else {
             Cat();
         }
@@ -127,9 +132,9 @@ public class Category_Fragment extends Fragment  implements com.android.volley.R
             progressBar.setVisibility(View.GONE);
             category_list.setVisibility(View.VISIBLE);
             categories_recyclerView = new Categories_recyclerView(getActivity(), category);
-            RecyclerView.LayoutManager		mLayoutManager = new GridLayoutManager(getActivity(),3);
-            //    uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
-            category_list.setLayoutManager(mLayoutManager);
+            RecyclerView.LayoutManager		mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+category_list.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+           category_list.setLayoutManager(mLayoutManager);
             category_list.setAdapter(categories_recyclerView);
             list_click_listener(category);
         } catch (Exception ex) {

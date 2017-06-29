@@ -42,10 +42,11 @@ import static com.bitoutlets_app.Constants.transition_value;
 
 public class Product_detail_Fragment extends Fragment  implements View.OnClickListener {
     private TextView description,price,title,tags,discount,stock;
-    private EditText quantity;
+    private TextView quantity;
     private SharedPreferences sharedPreferences;
-    private ImageView image,add_cart,whish_list,compare;
+    private ImageView image,add_cart,whish_list,compare,plus,minus;
     private int database_value=0;
+    private int count=0;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,30 +62,32 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
         add_cart=(ImageView)v.findViewById(R.id.add_cart);
         discount=(TextView)v.findViewById(R.id.discount);
         stock=(TextView)v.findViewById(R.id.stock);
-        tags=(TextView)v.findViewById(R.id.tags);
-        quantity=(EditText)v.findViewById(R.id.quantity);
+        plus=(ImageView) v.findViewById(R.id.plus);
+        minus=(ImageView) v.findViewById(R.id.minus);
         whish_list=(ImageView)v.findViewById(R.id.whislist);
         compare=(ImageView)v.findViewById(R.id.compare);
 
         add_cart.setOnClickListener(this);
         whish_list.setOnClickListener(this);
         compare.setOnClickListener(this);
+        plus.setOnClickListener(this);
+        minus.setOnClickListener(this);
         Product_details();
-        Picasso.with(getActivity()).load(Constants.product_images)
-                .
-                transform(new RoundedCornersTransformation(15, 0,
-                        RoundedCornersTransformation.CornerType.ALL))
+
+
+        Picasso.with(getActivity()).load(Constants.product_images).
+                transform(new RoundedCornersTransformation(15, 0,RoundedCornersTransformation.CornerType.ALL))
                 .placeholder(R.drawable.default_avatar).into(image);
         get_Id(Constants.product_id);
         return v;
     }
     private void Product_details(){
-      description.setText(Constants.product_description);
+        count =    Integer.parseInt(Constants.product_current_stock);
+        description.setText(Constants.product_description);
        price.setText(Constants.product_price);
         title.setText(Constants.product_title);
         stock.setText(Constants.product_current_stock);
         discount.setText(Constants.product_discount);
-        tags.setText(Constants.product_tags);
 
     }
 
@@ -93,17 +96,29 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
         switch (view.getId()) {
             case R.id.add_cart:
             database_value=1;
-
                 insert_data();
                 break;
             case R.id.whislist:
                 database_value=2;
                 insert_data();
                 break;
+
             case R.id.compare:
                 database_value=3;
                 insert_data();
                 break;
+            case R.id.plus:
+                count++;
+                stock.setText(count+"");
+                break;
+            case R.id.minus:
+                count--;
+                if(count<0){
+                 count=1;
+                }
+                stock.setText(count+"");
+                break;
+
         }
 
 

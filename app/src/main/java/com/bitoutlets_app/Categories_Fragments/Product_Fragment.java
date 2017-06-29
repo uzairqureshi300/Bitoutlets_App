@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.bitoutlets_app.Model_classes.SubCategory_Class;
 import com.bitoutlets_app.R;
 import com.bitoutlets_app.Recycler_Adapters.Product_recyclerView;
 import com.bitoutlets_app.Recycler_Adapters.RecyclerItemClickListener;
+import com.bitoutlets_app.Recycler_Adapters.SimpleDividerItemDecoration;
 import com.bitoutlets_app.Recycler_Adapters.Sub_Categories_recyclerView;
 import com.bitoutlets_app.Singletons.Category_Singletons;
 import com.bitoutlets_app.Singletons.Product_Singletons;
@@ -71,7 +73,7 @@ public class Product_Fragment extends Fragment implements com.android.volley.Res
             product=product_singletons.getProduct_list();
             product_recyclerView = new Product_recyclerView(getActivity(), product);
 
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
             //    uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
             products_list.setLayoutManager(mLayoutManager);
             product_recyclerView.notifyDataSetChanged();
@@ -151,8 +153,8 @@ public class Product_Fragment extends Fragment implements com.android.volley.Res
             }
             product_recyclerView = new Product_recyclerView(getActivity(), product);
 
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
-            //    uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+            products_list.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
             products_list.setLayoutManager(mLayoutManager);
             product_recyclerView.notifyDataSetChanged();
             products_list.setAdapter(product_recyclerView);
@@ -178,7 +180,7 @@ public class Product_Fragment extends Fragment implements com.android.volley.Res
                         Constants.product_tags= list.get(i).getTags();
                         Constants.product_unit= list.get(i).getUnit();
                         Constants.product_current_stock= list.get(i).getCurrent_stock();
-                        Constants.product_discount= list.get(i).getDescription();
+                        Constants.product_discount= list.get(i).getDiscount();
                         Constants.product_tax= list.get(i).getTax();
                         Constants.product_description= list.get(i).getDescription();
                         ((Categories)getActivity()).Integrate_fragments(4);

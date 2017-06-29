@@ -39,6 +39,8 @@ public class Constants {
     public static String profile_image="";
     public static String profile_totla_purchase="";
     public static int profile_value=0;
+    public static int home_products_value=0;
+
 
 
 

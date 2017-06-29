@@ -63,11 +63,9 @@ public class Product_recyclerView extends RecyclerView.Adapter<Product_recyclerV
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(horizontalList.get(position).getTitle());
         Picasso.with(context).load(horizontalList.get(position).getImage())
-                .resize(250,250).centerCrop().
-        transform(new RoundedCornersTransformation(15, 0,
+                .fit().centerCrop() .transform(new RoundedCornersTransformation(15, 0,
                 RoundedCornersTransformation.CornerType.ALL))
                 .placeholder(R.drawable.default_avatar).into(holder.cat_images);
-
 
     }
 
