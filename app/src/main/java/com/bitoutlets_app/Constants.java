@@ -1,5 +1,8 @@
 package com.bitoutlets_app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by uzair on 06/06/2017.
  */
@@ -40,6 +43,7 @@ public class Constants {
     public static String profile_totla_purchase="";
     public static int profile_value=0;
     public static int home_products_value=0;
+    public static List<String> db_list=new ArrayList<String>();
 
 
 

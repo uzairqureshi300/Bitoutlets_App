@@ -67,17 +67,8 @@ public class MainActivity extends AppCompatActivity{
         }
     }
     @Override
-    public void onBackPressed()
-    {
-        if(getSupportFragmentManager().getBackStackEntryCount() >0) {
-            Log.e("error", getSupportFragmentManager().getBackStackEntryCount() + "");
-            fragment = new Category_Fragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            ft.replace(R.id.content_frame, fragment);
-            ft.addToBackStack(null);
-            ft.commit();
-        } else
-            super.onBackPressed();
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

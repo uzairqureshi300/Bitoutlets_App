@@ -28,6 +28,8 @@ public class AndroidOpenDbHelper extends SQLiteOpenHelper {
 	public static final String product_description = "product_description";
 	public static final String product_image = "product_image";
 	public static final String product_unit = "unit";
+	public static final String product_add = "validate";
+
 
 	public AndroidOpenDbHelper(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
@@ -53,41 +55,10 @@ public class AndroidOpenDbHelper extends SQLiteOpenHelper {
 				product_tax + " text, "
 				+ product_description + " text, "
 				+ product_image + " text, "
+				+ product_add + " text, "
 				+ product_unit + " real);";
 		// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
 		db.execSQL(sqlQueryToCreateUndergraduateDetailsTable);
-		String sqlQueryToCreateUndergraduateDetailsTable_whishlist = "create table if not exists " + TABLE_NAME_Whish + " ( " + BaseColumns._ID + " integer primary key autoincrement, "
-				+ product_id + " text, "
-				+ product_title + " text, " +
-				product_price + " text, " +
-				product_shipping + " text, " +
-				product_features + " text, " +
-				product_tags + " text, "
-				+ product_current_stock + " text, "
-				+ product_no_of_views + " text, "
-				+ product_discount + " text, " +
-				product_tax + " text, "
-				+ product_description + " text, "
-				+ product_image + " text, "
-				+ product_unit + " real);";
-		// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
-		db.execSQL(sqlQueryToCreateUndergraduateDetailsTable_whishlist);
-		String sqlQueryToCreateUndergraduateDetailsTable_compare = "create table if not exists " + TABLE_NAME_Compare + " ( " + BaseColumns._ID + " integer primary key autoincrement, "
-				+ product_id + " text, "
-				+ product_title + " text, " +
-				product_price + " text, " +
-				product_shipping + " text, " +
-				product_features + " text, " +
-				product_tags + " text, "
-				+ product_current_stock + " text, "
-				+ product_no_of_views + " text, "
-				+ product_discount + " text, " +
-				product_tax + " text, "
-				+ product_description + " text, "
-				+ product_image + " text, "
-				+ product_unit + " real);";
-		// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
-		db.execSQL(sqlQueryToCreateUndergraduateDetailsTable_compare );
 
 
 	}
@@ -114,42 +85,10 @@ public class AndroidOpenDbHelper extends SQLiteOpenHelper {
 					product_tax + " text, "
 					+ product_description + " text, "
 					+ product_image + " text, "
+					+ product_add + " text, "
 					+ product_unit + " real);";
 			// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
 			db.execSQL(sqlQueryToCreateUndergraduateDetailsTable);
-			String sqlQueryToCreateUndergraduateDetailsTable_whishlist = "create table if not exists " + TABLE_NAME_Whish + " ( " + BaseColumns._ID + " integer primary key autoincrement, "
-					+ product_id + " text, "
-					+ product_title + " text, " +
-					product_price + " text, " +
-					product_shipping + " text, " +
-					product_features + " text, " +
-					product_tags + " text, "
-					+ product_current_stock + " text, "
-					+ product_no_of_views + " text, "
-					+ product_discount + " text, " +
-					product_tax + " text, "
-					+ product_description + " text, "
-					+ product_image + " text, "
-					+ product_unit + " real);";
-			// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
-			db.execSQL(sqlQueryToCreateUndergraduateDetailsTable_whishlist);
-			String sqlQueryToCreateUndergraduateDetailsTable_compare = "create table if not exists " + TABLE_NAME_Compare + " ( " + BaseColumns._ID + " integer primary key autoincrement, "
-					+ product_id + " text, "
-					+ product_title + " text, " +
-					product_price + " text, " +
-					product_shipping + " text, " +
-					product_features + " text, " +
-					product_tags + " text, "
-					+ product_current_stock + " text, "
-					+ product_no_of_views + " text, "
-					+ product_discount + " text, " +
-					product_tax + " text, "
-					+ product_description + " text, "
-					+ product_image + " text, "
-					+ product_unit + " real);";
-			// Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
-			db.execSQL(sqlQueryToCreateUndergraduateDetailsTable_compare );
-
 
 		}
 	}

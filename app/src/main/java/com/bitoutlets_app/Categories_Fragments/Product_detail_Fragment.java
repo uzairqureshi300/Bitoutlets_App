@@ -47,6 +47,7 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
     private ImageView image,add_cart,whish_list,compare,plus,minus;
     private int database_value=0;
     private int count=0;
+    private String product_type;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,7 +79,6 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
         Picasso.with(getActivity()).load(Constants.product_images).
                 transform(new RoundedCornersTransformation(15, 0,RoundedCornersTransformation.CornerType.ALL))
                 .placeholder(R.drawable.default_avatar).into(image);
-        get_Id(Constants.product_id);
         return v;
     }
     private void Product_details(){
@@ -95,17 +95,14 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_cart:
-            database_value=1;
-                insert_data();
+                get_Id(Constants.product_id,"cart");
                 break;
             case R.id.whislist:
-                database_value=2;
-                insert_data();
+                get_Id(Constants.product_id,"whishlist");
                 break;
 
             case R.id.compare:
-                database_value=3;
-                insert_data();
+                get_Id(Constants.product_id,"compare");
                 break;
             case R.id.plus:
                 count++;
@@ -123,19 +120,10 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
 
 
     }
-    public void insert_data(){
-
-        // First we have to open our DbHelper class by creating a new object of that
-        AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(getActivity());
-
-        // Then we need to get a writable SQLite database, because we are going to insert some values
-        // SQLiteDatabase has methods to create, delete, execute SQL commands, and perform other common database management tasks.
+    public void insert_data(String type){
+       AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(getActivity());
         SQLiteDatabase sqliteDatabase = androidOpenDbHelperObj.getWritableDatabase();
-
-        // ContentValues class is used to store a set of values that the ContentResolver can process.
         ContentValues contentValues = new ContentValues();
-
-        // Get values from the POJO class and passing them to the ContentValues class
         contentValues.put(AndroidOpenDbHelper.product_image,Constants.product_images );
         contentValues.put(AndroidOpenDbHelper.product_id, Constants.product_id);
         contentValues.put(AndroidOpenDbHelper.product_title, Constants.product_title);
@@ -147,77 +135,42 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
         contentValues.put(AndroidOpenDbHelper.product_current_stock ,Constants.product_current_stock);
         contentValues.put(AndroidOpenDbHelper.product_tax, Constants.product_tax);
         contentValues.put(AndroidOpenDbHelper.product_description, Constants.product_description);
+        contentValues.put(AndroidOpenDbHelper.product_add, type);
 
         long affectedColumnId = 0;
-        if(database_value==1) {
-            // Now we can insert the data in to relevant table
-            // I am going pass the id value, which is going to change because of our insert method, to a long variable to show in Toast
              affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_Cart, null, contentValues);
-            add_cart.setEnabled(false);
-        }
-        else if(database_value==2){
-
-            affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_Whish, null, contentValues);
-            whish_list.setEnabled(false);
-        }
-        else if(database_value==3){
-
-            affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_Compare, null, contentValues);
-            compare.setEnabled(false);
-        }
-        // It is a good practice to close the database connections after you have done with it
-        sqliteDatabase.close();
 
         // I am not going to do the retrieve part in this post. So this is just a notification for satisfaction ;-)
         Toast.makeText(getActivity(), "Values inserted column ID is :" + affectedColumnId, Toast.LENGTH_SHORT).show();
+        Log.e("type",type);
 
     }
-    private void get_Id(String id) {
-        List<String> list_id=new ArrayList<String>();
-        List<String> list_whish=new ArrayList<String>();
-        List<String> list_compare=new ArrayList<String>();
+
+
+    private void get_Id(String id,String add_type) {
 
         AndroidOpenDbHelper openHelperClass = new AndroidOpenDbHelper(getActivity());
-
+       String First_name="";
+        String type="";
         SQLiteDatabase sqliteDatabase = openHelperClass.getReadableDatabase();
 
         Cursor cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_Cart, null, null, null, null, null, null);
         getActivity().startManagingCursor(cursor);
         while (cursor.moveToNext()) {
             Log.e("count", cursor.toString());
-            String First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id));
-            list_id.add(First_name);
-        }
-       for(int i=0;i<list_id.size();i++){
-           if(id.equals(list_id.get(i))){
-               add_cart.setEnabled(false);
-           }
-       }
-        cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_Whish, null, null, null, null, null, null);
-        getActivity().startManagingCursor(cursor);
-        while (cursor.moveToNext()) {
-            Log.e("count", cursor.toString());
-            String First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id));
-            list_whish.add(First_name);
-        }
-        for(int i=0;i<list_whish.size();i++){
-            if(id.equals(list_whish.get(i))){
+            First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id));
+             type = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_add));
 
-                whish_list.setEnabled(false);
+            if(First_name.equals(id )&& type.equals(add_type)){
+                Toast.makeText(getActivity(), "Already added", Toast.LENGTH_SHORT).show();
+           break;
             }
         }
-        cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_Compare, null, null, null, null, null, null);
-        getActivity().startManagingCursor(cursor);
-        while (cursor.moveToNext()) {
-            Log.e("count", cursor.toString());
-            String First_name = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id));
-            list_compare.add(First_name);
-        }
-        for(int i=0;i<list_compare.size();i++){
-            if(id.equals(list_compare.get(i))){
 
-                compare.setEnabled(false);
-            }
+        if(!First_name.equals(id) || !type.equals(add_type)){
+            insert_data(add_type);
         }
+
+
     }
 }

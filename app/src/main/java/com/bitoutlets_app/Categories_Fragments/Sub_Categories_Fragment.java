@@ -70,8 +70,8 @@ public class Sub_Categories_Fragment extends Fragment
         final Category_class movieModel = new Gson().fromJson(data, Category_class.class);
         sub_categories_recyclerView = new Sub_Categories_recyclerView(getActivity(), movieModel.getSub_category());
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
-        sub_category_list.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        RecyclerView.LayoutManager		mLayoutManager = new GridLayoutManager(getActivity(),3);
+
         sub_category_list.setLayoutManager(mLayoutManager);
         sub_categories_recyclerView.notifyDataSetChanged();
         sub_category_list.setAdapter(sub_categories_recyclerView);

@@ -66,9 +66,10 @@ public class Categories_recyclerView extends RecyclerView.Adapter<Categories_rec
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.name.setText(horizontalList.get(position).getName());
+        holder.name.setText(horizontalList.get(position).getName().toLowerCase());
+        holder.name.setWidth(holder.cat_images.getDrawable().getIntrinsicWidth());
         Picasso.with(context).load("http://bitoutlets.com/uploads/category_image/"+horizontalList.get(position).getImage())
-       .fit().centerCrop() .transform(new RoundedCornersTransformation(15, 0,
+       .resize(300,300).centerCrop() .transform(new RoundedCornersTransformation(15, 0,
                 RoundedCornersTransformation.CornerType.ALL))
                 .placeholder(R.drawable.default_avatar).into(holder.cat_images);
   }

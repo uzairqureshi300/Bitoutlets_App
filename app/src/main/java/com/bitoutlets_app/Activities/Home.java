@@ -1,9 +1,12 @@
 package com.bitoutlets_app.Activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 
 import com.bitoutlets_app.Categories_Fragments.Product_Fragment;
 import com.bitoutlets_app.Constants;
+import com.bitoutlets_app.Database.AndroidOpenDbHelper;
 import com.bitoutlets_app.Menu_Drawer.data.BaseItem;
 import com.bitoutlets_app.Menu_Drawer.data.CustomDataProvider;
 import com.bitoutlets_app.Menu_Drawer.views.LevelBeamView;
@@ -35,6 +39,7 @@ import com.bitoutlets_app.Profile_fragments.Featured_Fragment;
 import com.bitoutlets_app.Profile_fragments.Profile_Fragment;
 import com.bitoutlets_app.Profile_fragments.Support_Fragment;
 import com.bitoutlets_app.R;
+import com.bitoutlets_app.Singletons.Product_Singletons;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -55,10 +60,12 @@ private Fragment fragment=null;
     SharedPreferences sharedPreferences_login;
     private CircleImageView profile_picture;
     View head;
+    private Product_Singletons product_singletons;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        product_singletons=Product_Singletons.getInstance();
+        product_singletons.setProduct_list();
         sharedPreferences_login=getSharedPreferences("Login",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences_login.edit();
         editor.putInt("value",1);
@@ -99,8 +106,28 @@ private Fragment fragment=null;
         ft.addToBackStack(null);
         ft.commit();
         confMenu();
+
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+   //     load_db();
+    }
+
+    private void load_db(){
+        AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(this);
+        SQLiteDatabase sqliteDatabase = androidOpenDbHelperObj.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_Cart, null, null, null, null, null, null);
+        startManagingCursor(cursor);
+        while (cursor.moveToNext()) {
+            Log.e("count", cursor.toString());
+            String pro_id = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id));
+            Constants.db_list.add(pro_id);
+
+        }
+    }
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -165,6 +192,18 @@ private Fragment fragment=null;
                         ft.replace(R.id.home_fragment, fragment);
                         ft.addToBackStack(null);
                         ft.commit();
+                        drawer.closeDrawers();
+                        break;
+                    case "Logout":
+                        sharedPreferences_login=getSharedPreferences("Login",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences_login.edit();
+                        editor.clear();
+                        editor.commit();
+
+                        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        finish();
                         drawer.closeDrawers();
                         break;
                 }

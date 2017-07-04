@@ -27,10 +27,7 @@ public class CustomDataProvider {
         * */
         rootMenu.add(new Item("Categories"));
         rootMenu.add(new GroupItem("Profile"));
-        rootMenu.add(new GroupItem("KATEGORI"));
-        rootMenu.add(new GroupItem("KATEGORI LAINNYA"));
-        rootMenu.add(new Item("PENGATURAN"));
-
+        rootMenu.add(new Item("Logout"));
         return rootMenu;
     }
 

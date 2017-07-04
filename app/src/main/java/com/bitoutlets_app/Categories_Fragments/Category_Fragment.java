@@ -71,10 +71,8 @@ public class Category_Fragment extends Fragment  implements com.android.volley.R
             progressBar.setVisibility(View.GONE);
             category_list.setVisibility(View.VISIBLE);
              categories_recyclerView = new Categories_recyclerView(getActivity(), category);
-            category_list.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
 
-            RecyclerView.LayoutManager		mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-            category_list.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+            RecyclerView.LayoutManager		mLayoutManager = new GridLayoutManager(getActivity(),3);
             category_list.setLayoutManager(mLayoutManager);
             category_list.setAdapter(categories_recyclerView);
             list_click_listener(category);
@@ -132,8 +130,7 @@ public class Category_Fragment extends Fragment  implements com.android.volley.R
             progressBar.setVisibility(View.GONE);
             category_list.setVisibility(View.VISIBLE);
             categories_recyclerView = new Categories_recyclerView(getActivity(), category);
-            RecyclerView.LayoutManager		mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-category_list.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+            RecyclerView.LayoutManager		mLayoutManager = new GridLayoutManager(getActivity(),3);
            category_list.setLayoutManager(mLayoutManager);
             category_list.setAdapter(categories_recyclerView);
             list_click_listener(category);

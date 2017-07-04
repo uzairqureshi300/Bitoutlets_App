@@ -62,4 +62,6 @@ public class Welcome_Fragment extends Fragment  implements View.OnClickListener,
         Log.e("response",response.toString());
 
     }
+
+
 }
