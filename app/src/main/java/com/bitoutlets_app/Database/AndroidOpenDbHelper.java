@@ -1,4 +1,4 @@
-package com.bitoutlets_app.Database;
+	package com.bitoutlets_app.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

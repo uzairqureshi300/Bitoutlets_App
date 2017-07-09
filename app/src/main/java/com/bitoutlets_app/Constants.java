@@ -1,5 +1,8 @@
 package com.bitoutlets_app;
 
+import com.bitoutlets_app.Model_classes.Fetch_class;
+import com.bitoutlets_app.Recycler_Adapters.Whishlist_recyclerView_adapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +46,10 @@ public class Constants {
     public static String profile_totla_purchase="";
     public static int profile_value=0;
     public static int home_products_value=0;
-    public static List<String> db_list=new ArrayList<String>();
+    public static int load_db_value=0;
+    public static Whishlist_recyclerView_adapter whishlist_recyclerView_adapter;
+
+    public static List<Fetch_class> db_list=new ArrayList<Fetch_class>();
 
 
 

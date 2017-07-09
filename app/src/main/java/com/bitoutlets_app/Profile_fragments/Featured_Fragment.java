@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,12 +18,16 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bitoutlets_app.Activities.Categories;
+import com.bitoutlets_app.Categories_Fragments.Product_Fragment;
+import com.bitoutlets_app.Categories_Fragments.Product_detail_Fragment;
 import com.bitoutlets_app.Constants;
 import com.bitoutlets_app.Model_classes.Product_class;
 import com.bitoutlets_app.R;
 import com.bitoutlets_app.Recycler_Adapters.Categories_recyclerView;
 import com.bitoutlets_app.Recycler_Adapters.Featured_Product_recyclerView_Adapters;
 import com.bitoutlets_app.Recycler_Adapters.Recent_Mostviewed_Product_recyclerView_Adapters;
+import com.bitoutlets_app.Recycler_Adapters.RecyclerItemClickListener;
 import com.bitoutlets_app.ViewPager.ViewPagerAdapter;
 import com.bitoutlets_app.Volley_Singleton.MySingleton;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -47,6 +52,7 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
     private RecyclerView featured_products_recyclerview,latest_products_recyclerview,recently_viewd_recyclerview,
             most_viewd_recyclerview;
     private String api_call;
+    private Fragment fragment = null;
     Featured_Product_recyclerView_Adapters   featured_product_recyclerView_adapters;
     private ArrayList<String> slider_images=new ArrayList<String>();
   //  private Featured_Product_recyclerView_Adapters featured_product_recyclerView_adapters;
@@ -55,7 +61,6 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
     private List<Product_class> latest_product_classList = new ArrayList<Product_class>();
     private List<Product_class> recently_viewed_classList = new ArrayList<Product_class>();
     private List<Product_class> most_viewed_classList = new ArrayList<Product_class>();
-    private View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,6 +102,7 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
 
         }
     }
+
     private void get_slide() {
         try {
             api_call = "slide";
@@ -119,9 +125,7 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
 
         }
     }
-
-
-    private void get_featured() {
+     private void get_featured() {
         try {
             api_call = "featured_product";
             JSONObject json = new JSONObject();
@@ -218,7 +222,6 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
     @Override
     public void onResponse(JSONObject response) {
 
-        Log.e("response", response.toString());
         try {
             switch (api_call) {
 
@@ -233,6 +236,13 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
                             product_class.setTitle(jsonObject.getString("title"));
                             product_class.setPrice(jsonObject.getString("price"));
                             product_class.setImage(jsonObject.getString("image"));
+                            product_class.setCurrent_stock(jsonObject.getString("current_stock"));
+                            product_class.setShipping_cost(jsonObject.getString("shipping"));
+                            product_class.setTags(jsonObject.getString("tags"));
+                            product_class.setUnit(jsonObject.getString("unit"));
+                            product_class.setDiscount(jsonObject.getString("discount"));
+                            product_class.setTax(jsonObject.getString("tax"));
+                            product_class.setDescription(jsonObject.getString("description"));
                             product_classList.add(product_class);
 
                         }
@@ -242,10 +252,12 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
                         //    uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
                         featured_products_recyclerview.setLayoutManager(mLayoutManager);
                         featured_products_recyclerview.setAdapter(featured_product_recyclerView_adapters);
+
                     }
                     get_latest("latest");
                     break;
                 case "latest":
+                    Log.e("response", response.toString());
 
                     if (response.getString("error").equals("0")) {
                         Constants.home_products_value = 2;
@@ -291,6 +303,8 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
                             product_class.setTitle(jsonObject.getString("title"));
                             product_class.setPrice(jsonObject.getString("price"));
                             product_class.setImage(jsonObject.getString("image"));
+
+
                             recently_viewed_classList.add(product_class);
                         }
 
@@ -298,7 +312,7 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                         //    uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
                         recently_viewd_recyclerview.setLayoutManager(mLayoutManager);
-                        recently_viewd_recyclerview.setAdapter(featured_product_recyclerView_adapters);
+                        recently_viewd_recyclerview.setAdapter(recent_mostviewed_product_recyclerView_adapters);
                         get_latest("most_viewed");
 
                     }
@@ -320,7 +334,7 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                         //    uGraduateNamesListView.addItemDecoration(new SimpleDividerItemDecoration(this));
                         most_viewd_recyclerview.setLayoutManager(mLayoutManager);
-                        most_viewd_recyclerview.setAdapter(featured_product_recyclerView_adapters);
+                        most_viewd_recyclerview.setAdapter(recent_mostviewed_product_recyclerView_adapters);
 
                     }
                     break;
@@ -330,5 +344,7 @@ public class Featured_Fragment extends Fragment implements BaseSliderView.OnSlid
 
         }
     }
+
+
 
 }

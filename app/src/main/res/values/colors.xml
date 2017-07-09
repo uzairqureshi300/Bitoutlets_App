@@ -15,4 +15,7 @@
     <color name="black">#000000</color>
     <color name="font_item_drawer">#000000</color>
     <color name="tab_view_color">#21836c</color>
+
+    <color name="album_title">#4c4c4c</color>
+
 </resources>

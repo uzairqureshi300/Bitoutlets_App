@@ -23,17 +23,18 @@ public class FriendsClass {
         this.c = context;
     }
 
-  public static List load_db(Context c){
+  public static List<Fetch_class> load_db(Context c){
       String pro_id="";
         AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(c);
         SQLiteDatabase sqliteDatabase = androidOpenDbHelperObj.getReadableDatabase();
         Cursor cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_Cart, null, null, null, null, null, null);
         ((Activity)c).startManagingCursor(cursor);
         while (cursor.moveToNext()) {
-
-             pro_id = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id));
-            Log.e("count",cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id)));
-            Constants.db_list.add(pro_id);
+                Fetch_class fetch_class=new Fetch_class();
+             fetch_class.setId(cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id)));
+            fetch_class.setType(cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_add)));
+            Log.e("count",cursor.getLong(cursor.getColumnIndex("_id"))+"");
+            Constants.db_list.add(fetch_class);
 
         }
         return Constants.db_list;

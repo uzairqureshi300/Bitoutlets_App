@@ -43,7 +43,7 @@ import static com.bitoutlets_app.Constants.transition_value;
 public class Product_detail_Fragment extends Fragment  implements View.OnClickListener {
     private TextView description,price,title,tags,discount,stock;
     private TextView quantity;
-    private SharedPreferences sharedPreferences;
+
     private ImageView image,add_cart,whish_list,compare,plus,minus;
     private int database_value=0;
     private int count=0;
@@ -53,8 +53,6 @@ public class Product_detail_Fragment extends Fragment  implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         transition_value=4;
-        sharedPreferences=getActivity().getSharedPreferences("CART", Context.MODE_PRIVATE);
-
         View v = inflater.inflate(R.layout.details_fragment, container, false);
         description=(TextView)v.findViewById(R.id.description);
         price=(TextView)v.findViewById(R.id.product_price);

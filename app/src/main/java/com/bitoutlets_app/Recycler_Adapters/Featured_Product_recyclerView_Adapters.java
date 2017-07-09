@@ -6,6 +6,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bitoutlets_app.Categories_Fragments.Product_detail_Fragment;
 import com.bitoutlets_app.Constants;
 import com.bitoutlets_app.Database.AndroidOpenDbHelper;
+import com.bitoutlets_app.Model_classes.Fetch_class;
 import com.bitoutlets_app.Model_classes.FriendsClass;
 import com.bitoutlets_app.Model_classes.Product_class;
 import com.bitoutlets_app.R;
@@ -51,7 +56,6 @@ public class Featured_Product_recyclerView_Adapters extends RecyclerView.Adapter
                     cart=(ImageView)view.findViewById(R.id.cart);
                     whislist=(ImageView)view.findViewById(R.id.whishlist);
                     compare=(ImageView)view.findViewById(R.id.compare);
-
 
             }
 
@@ -89,63 +93,131 @@ public class Featured_Product_recyclerView_Adapters extends RecyclerView.Adapter
                 horizontalList.get(position).getDescription()
                 );
     }
-    private void setClickListener(MyViewHolder holder,final String image, final String id, final String title, final String price, final String ship_cost, final String features,
-                                  final String tags, final String unit, final String current_stock, final String tax, final String description){
+    private void setClickListener(MyViewHolder holder,final String image, final String id, final String title,
+                                  final String price, final String ship_cost, final String features,
+                                  final String tags, final String unit, final String current_stock, final String tax,
+                                  final String description)
+    {
 
         holder.cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insert_data(view,image,id,title,price,ship_cost,features,tags,unit,current_stock,tax,description);
+                get_Id(image,id,title,price,ship_cost,features,
+                tags, unit, current_stock,tax, description,"cart");
             }
         });
+        holder.whislist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                get_Id(image,id,title,price,ship_cost,features,
+                        tags, unit, current_stock,tax, description,"whishlist");
+            }
+        });
+        holder.compare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                get_Id(image,id,title,price,ship_cost,features,
+                        tags, unit, current_stock,tax, description,"compare");
+            }
+        });
+        holder.cat_images.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                click_listener(image,id,title,price,ship_cost,features,tags,unit,current_stock,tax,description);
+            }
+        });
+    }
+    private void get_Id(final String image, final String id, final String title, final String price,
+                        final String ship_cost, final String features,
+                        final String tags,
+                        final String unit,
+                        final String current_stock, final String tax,
+                        final String description,final String type) {
+
+        String First_name="";
+        String types="";
+            if(Constants.db_list!=null || !Constants.db_list.isEmpty()) {
+                for (int i = 0; i < Constants.db_list.size(); i++) {
+                    First_name=Constants.db_list.get(i).getId();
+                    types=Constants.db_list.get(i).getType();
+                    if (First_name.equals(id) && types.equals(type)) {
+                        Toast.makeText(context, "Already added", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+            }
+
+        if(!First_name.equals(id) || !type.equals(types)){
+            insert_data(image,id,title,price,
+            ship_cost,features, tags, unit,
+            current_stock,tax,
+            description,type);
+        }
+
 
     }
-    public void insert_data(View view,final String image, final String id, final String title, final String price, final String ship_cost, final String features,
-                            final String tags, final String unit, final String current_stock, final String tax, final String description) {
-        List<String> pro_ids = new ArrayList<String>();
-        pro_ids=FriendsClass.load_db(context);
-        String p_id = "";
-        for (int i = 0; i < pro_ids.size(); i++) {
-            if (id.equals(pro_ids.get(i))) {
-                Snackbar.make(view, "Already Added", Snackbar.LENGTH_SHORT).show();
-                p_id = pro_ids.get(i).toString();
+    public void insert_data(final String image, final String id, final String title, final String price,
+                            final String ship_cost, final String features,
+                            final String tags,
+                            final String unit,
+                            final String current_stock, final String tax,
+                            final String description,final String type){
+        AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(context);
+        SQLiteDatabase sqliteDatabase = androidOpenDbHelperObj.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(AndroidOpenDbHelper.product_image,image);
+        contentValues.put(AndroidOpenDbHelper.product_id,id);
+        contentValues.put(AndroidOpenDbHelper.product_title,title);
+        contentValues.put(AndroidOpenDbHelper.product_price,price);
+        contentValues.put(AndroidOpenDbHelper.product_shipping, ship_cost);
+        contentValues.put(AndroidOpenDbHelper.product_features, features);
+        contentValues.put(AndroidOpenDbHelper.product_tags, tags);
+        contentValues.put(AndroidOpenDbHelper.product_unit, unit);
+        contentValues.put(AndroidOpenDbHelper.product_current_stock ,current_stock);
+        contentValues.put(AndroidOpenDbHelper.product_tax, tax);
+        contentValues.put(AndroidOpenDbHelper.product_description,description);
+        contentValues.put(AndroidOpenDbHelper.product_add, type);
+        Fetch_class fetch_class =new Fetch_class();
+        fetch_class.setId(id);
+        fetch_class.setType(type);
+        Constants.db_list.add(fetch_class);
+        long affectedColumnId = 0;
+        affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_Cart, null, contentValues);
 
-                break;
-            }
+        // I am not going to do the retrieve part in this post. So this is just a notification for satisfaction ;-)
+        Toast.makeText(context, "Values inserted column ID is :" + affectedColumnId, Toast.LENGTH_SHORT).show();
+        Log.e("type",type);
 
-        }
-            if (!id.equals(p_id)) {
-                AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(context);
+    }
+    private void click_listener(final String image, final String id, final String title,
+                                final String price, final String ship_cost, final String features,
+                                final String tags, final String unit, final String current_stock, final String tax,
+                                final String description){
 
-                SQLiteDatabase sqliteDatabase = androidOpenDbHelperObj.getWritableDatabase();
-
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(AndroidOpenDbHelper.product_image, image);
-                contentValues.put(AndroidOpenDbHelper.product_id, id);
-                contentValues.put(AndroidOpenDbHelper.product_title, title);
-                contentValues.put(AndroidOpenDbHelper.product_price, price);
-                contentValues.put(AndroidOpenDbHelper.product_shipping, ship_cost);
-                contentValues.put(AndroidOpenDbHelper.product_features, features);
-                contentValues.put(AndroidOpenDbHelper.product_tags, tags);
-                contentValues.put(AndroidOpenDbHelper.product_unit, unit);
-                contentValues.put(AndroidOpenDbHelper.product_current_stock, current_stock);
-                contentValues.put(AndroidOpenDbHelper.product_tax, tax);
-                contentValues.put(AndroidOpenDbHelper.product_description, description);
-
-                long affectedColumnId = 0;
-                affectedColumnId = sqliteDatabase.insert(AndroidOpenDbHelper.TABLE_NAME_Cart, null, contentValues);
-
-
-                // It is a good practice to close the database connections after you have done with it
-                sqliteDatabase.close();
-
-                // I am not going to do the retrieve part in this post. So this is just a notification for satisfaction ;-)
-                Toast.makeText(context, "Values inserted column ID is :" + affectedColumnId, Toast.LENGTH_SHORT).show();
-
-            }
+        Constants.product_images= image;
+        Constants.product_id= id;
+        Constants.product_title= title;
+        Constants.product_price= price;
+        Constants.product_shippingcost=ship_cost;
+        Constants.product_features=features;
+        Constants.product_tags= tags;
+        Constants.product_unit= unit;
+        Constants.product_current_stock=current_stock;
+  //      Constants.product_discount= tax;
+        Constants.product_tax= tax;
+        Constants.product_description= description;
+       Fragment fragment = new Product_detail_Fragment();
+        FragmentTransaction ft =((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ft.replace(R.id.home_fragment, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
 
 
-        }
+    }
+
+
 
 
 

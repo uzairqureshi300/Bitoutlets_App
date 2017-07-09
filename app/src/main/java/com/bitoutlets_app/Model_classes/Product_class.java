@@ -6,6 +6,7 @@ import java.util.List;
 
 
 public class Product_class {
+    private long id;
     private String product_id;
     private String title;
     private String price;
@@ -19,6 +20,14 @@ public class Product_class {
     private String description;
     private String image;
     private String unit;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getUnit() {
         return unit;

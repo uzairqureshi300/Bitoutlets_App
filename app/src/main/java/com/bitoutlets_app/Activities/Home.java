@@ -34,10 +34,12 @@ import com.bitoutlets_app.Database.AndroidOpenDbHelper;
 import com.bitoutlets_app.Menu_Drawer.data.BaseItem;
 import com.bitoutlets_app.Menu_Drawer.data.CustomDataProvider;
 import com.bitoutlets_app.Menu_Drawer.views.LevelBeamView;
+import com.bitoutlets_app.Model_classes.FriendsClass;
 import com.bitoutlets_app.Profile_fragments.Edit_Profile_Fragment;
 import com.bitoutlets_app.Profile_fragments.Featured_Fragment;
 import com.bitoutlets_app.Profile_fragments.Profile_Fragment;
 import com.bitoutlets_app.Profile_fragments.Support_Fragment;
+import com.bitoutlets_app.Profile_fragments.Whishlist_Fragment;
 import com.bitoutlets_app.R;
 import com.bitoutlets_app.Singletons.Product_Singletons;
 import com.squareup.picasso.Picasso;
@@ -64,6 +66,8 @@ private Fragment fragment=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         product_singletons=Product_Singletons.getInstance();
         product_singletons.setProduct_list();
         sharedPreferences_login=getSharedPreferences("Login",Context.MODE_PRIVATE);
@@ -113,21 +117,14 @@ private Fragment fragment=null;
     @Override
     protected void onResume() {
         super.onResume();
-   //     load_db();
-    }
-
-    private void load_db(){
-        AndroidOpenDbHelper androidOpenDbHelperObj = new AndroidOpenDbHelper(this);
-        SQLiteDatabase sqliteDatabase = androidOpenDbHelperObj.getReadableDatabase();
-        Cursor cursor = sqliteDatabase.query(AndroidOpenDbHelper.TABLE_NAME_Cart, null, null, null, null, null, null);
-        startManagingCursor(cursor);
-        while (cursor.moveToNext()) {
-            Log.e("count", cursor.toString());
-            String pro_id = cursor.getString(cursor.getColumnIndex(AndroidOpenDbHelper.product_id));
-            Constants.db_list.add(pro_id);
+        if(Constants.db_list.isEmpty() || Constants.db_list!=null) {
+            Constants.db_list.clear();
+            Constants.db_list = FriendsClass.load_db(Home.this);
 
         }
     }
+
+
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -194,6 +191,16 @@ private Fragment fragment=null;
                         ft.commit();
                         drawer.closeDrawers();
                         break;
+                    case "Whishlist":
+                        fragment = new Whishlist_Fragment();
+                        ft = getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        ft.replace(R.id.home_fragment, fragment);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                        drawer.closeDrawers();
+                        break;
+
                     case "Logout":
                         sharedPreferences_login=getSharedPreferences("Login",Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences_login.edit();

@@ -67,6 +67,7 @@ public class Product_Fragment extends Fragment implements com.android.volley.Res
         if(Constants.product_fragment_value==0) {
             product_singletons.setProduct_list();
             get_Products(Constants.sub_cat_id);
+            Toast.makeText(getActivity(), Constants.sub_cat_id, Toast.LENGTH_SHORT).show();
         }
         if(Constants.product_fragment_value==1) {
             Log.e("save","dsdsa");
@@ -92,11 +93,13 @@ public class Product_Fragment extends Fragment implements com.android.volley.Res
             JSONObject json = new JSONObject();
             json.put("token", Constants.token);
             json.put("user_id", Constants.user_id);
-            json.put("sub_category_id", id);
+            json.put("subcategory", id);
+            json.put("limit", "10");
+            json.put("offset", "0");
 
             JSONObject json2 = new JSONObject();
             json2.put("to", "bitoutlet");
-            json2.put("methods", "fetch_products");
+            json2.put("methods", "searches");
             json2.accumulate("complex", json);
             String url = "http://orupartners.com/cp/redirect_to.php";
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, json2, this, this) {
@@ -128,21 +131,21 @@ public class Product_Fragment extends Fragment implements com.android.volley.Res
                     JSONObject jsonObject = array.getJSONObject(i);
                     Product_class product_class = new Product_class();
 
-                    logo = jsonObject.getJSONObject("images").getString("name");
-                    product_class.setDescription(jsonObject.getString("description"));
+                    logo = jsonObject.getString("image");
+//                    product_class.setDescription(jsonObject.getString("description"));
 
                     product_class.setImage(logo);
-                    product_class.setProduct_id(jsonObject.getString("product_id"));
+//                    product_class.setProduct_id(jsonObject.getString("product_id"));
                     product_class.setTitle(jsonObject.getString("title"));
-                    product_class.setPrice(jsonObject.getString("price"));
-                    product_class.setShipping_cost(jsonObject.getJSONObject("shipping_cost").getString("Pakistan"));
-                    product_class.setFeatures(jsonObject.getString("features"));
-                    product_class.setTags(jsonObject.getString("tags"));
-                    product_class.setUnit(jsonObject.getString("unit"));
-                    product_class.setCurrent_stock(jsonObject.getString("current_stock"));
-                    product_class.setDiscount(jsonObject.getString("discount"));
-                    product_class.setTax(jsonObject.getString("tax"));
-                    product_class.setDescription(jsonObject.getString("description"));
+//                    product_class.setPrice(jsonObject.getString("price"));
+//                    product_class.setShipping_cost(jsonObject.getJSONObject("shipping_cost").getString("Pakistan"));
+//                    product_class.setFeatures(jsonObject.getString("features"));
+//                    product_class.setTags(jsonObject.getString("tags"));
+//                    product_class.setUnit(jsonObject.getString("unit"));
+//                    product_class.setCurrent_stock(jsonObject.getString("current_stock"));
+//                    product_class.setDiscount(jsonObject.getString("discount"));
+//                    product_class.setTax(jsonObject.getString("tax"));
+//                    product_class.setDescription(jsonObject.getString("description"));
                     product.add(product_class);
                     product_singletons.addPart(product_class);
                 }
