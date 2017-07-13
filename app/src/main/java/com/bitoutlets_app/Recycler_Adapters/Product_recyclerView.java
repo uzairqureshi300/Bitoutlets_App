@@ -49,7 +49,12 @@ public class Product_recyclerView extends RecyclerView.Adapter<Product_recyclerV
         this.context=context;
         this.horizontalList = horizontalList;
     }
-
+    public void addListItemToAdapter(List<Product_class> list) {
+        //Add list to current array list of data
+        horizontalList.addAll(list);
+        //Notify UI
+        this.notifyDataSetChanged();
+    }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
