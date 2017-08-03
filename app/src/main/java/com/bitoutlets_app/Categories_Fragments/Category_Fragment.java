@@ -136,7 +136,6 @@ public class Category_Fragment extends Fragment  implements com.android.volley.R
             list_click_listener(category);
         } catch (Exception ex) {
             ex.printStackTrace();
-
         }
     }
     private void  list_click_listener(final List<Category_class> categories_list){

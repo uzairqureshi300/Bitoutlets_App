@@ -60,7 +60,6 @@ public class Sub_Categories_recyclerView extends RecyclerView.Adapter<Sub_Catego
      @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(horizontalList.get(position).getName());
-        Log.e("SIZE",horizontalList.get(position).getName());
          holder.name.setWidth(holder.cat_images.getDrawable().getIntrinsicWidth());
          Picasso.with(context).load("http://bitoutlets.com/uploads/sub_category_image/"+horizontalList.get(position).getImage())
                  .resize(300,300).centerCrop() .transform(new RoundedCornersTransformation(15, 0,
